@@ -23,6 +23,7 @@ public class Client {
     private String name;
     private String email;
     private String phone;
+    private String preferences;
 
     @Enumerated(EnumType.STRING)
     private ClientType type;
