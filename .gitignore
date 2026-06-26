@@ -1,14 +1,27 @@
+# Environment
+Backend/src/main/resources/application.properties
+.env
+
+# Maven
+target/
+*.class
+*.jar
+*.war
+
 # IntelliJ
 .idea/
 *.iml
+*.iws
+*.ipr
 
-# VS Code (optional)
-.vscode/
+# Frontend
+Frontend/client/node_modules/
+Frontend/client/dist/
 
-# Java
-Backend/target/
+# Logs
+*.log
+logs/
 
-# React
-Frontend/my-app/node_modules/
-Frontend/my-app/dist/
-
+# OS
+.DS_Store
+Thumbs.db
