@@ -33,6 +33,11 @@ public class PropertyController {
         return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PropertyResponse> getPropertyById(@PathVariable Long id) {
+        return ResponseEntity.ok(propertyService.getPropertyById(id));
+    }
+
     // Update
     @PutMapping("/{id}")
     public ResponseEntity<PropertyResponse> updateProperty(

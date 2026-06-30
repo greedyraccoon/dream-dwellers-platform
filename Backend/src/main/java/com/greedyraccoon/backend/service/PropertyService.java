@@ -59,7 +59,10 @@ public class PropertyService {
                 property.getStatus().name(),
                 property.getPrice(),
                 property.getLocation(),
-                property.getAgent().getName()
+                property.getAgent().getName(),
+                property.getImageUrl(),
+                property.getBedrooms(),
+                property.getArea()
         );
     }
 
@@ -146,4 +149,9 @@ public class PropertyService {
     }
 
 
+    public PropertyResponse getPropertyById(Long id) {
+        Property property = propertyRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Property not found"));
+        return mapToResponse(property);
+    }
 }

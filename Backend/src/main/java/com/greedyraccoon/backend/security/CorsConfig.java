@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/v1/**") // Matches your frontend axios baseURL
-                        .allowedOrigins("http://localhost:5173", "http://localhost:3000") // Allow Vite local server origins
+                        .allowedOrigins("http://localhost:5173" ) // Allow Vite local server origins
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization") // Crucial if you return JWTs in headers

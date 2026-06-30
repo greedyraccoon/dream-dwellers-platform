@@ -9,5 +9,8 @@ public record PropertyResponse(
         String status,
         BigDecimal price,
         String location,
-        String agentName
+        String agentName,
+        String imageUrl,
+        Integer bedrooms,
+        Double area
 ) {}
