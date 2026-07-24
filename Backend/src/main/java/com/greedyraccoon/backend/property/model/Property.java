@@ -51,8 +51,10 @@ public class Property {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    private Integer bathrooms;
+
     public enum PropertyType {
-        RESIDENTIAL, COMMERCIAL
+        FURNISHED, UNFURNISHED, EMPTY, READY_TO_MOVEIN , UNDER_CONSTRUCTION
     }
 
     public enum PropertyStatus {

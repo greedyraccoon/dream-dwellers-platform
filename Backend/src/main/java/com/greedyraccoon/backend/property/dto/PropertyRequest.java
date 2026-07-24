@@ -11,5 +11,5 @@ public record   PropertyRequest(
         String location,
         Integer bedrooms,
         Double area,
-        String imageUrl
+        Integer bathrooms
 ) {}

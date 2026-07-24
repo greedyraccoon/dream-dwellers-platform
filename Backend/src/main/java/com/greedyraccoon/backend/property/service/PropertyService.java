@@ -21,6 +21,7 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
     private final UserRepository userRepository;
+    private final ImageStorageService imageStorageService;
 
     public PropertyResponse createProperty(PropertyRequest request, String agentEmail) {
         User agent = userRepository.findByEmail(agentEmail)
@@ -35,7 +36,7 @@ public class PropertyService {
         property.setLocation(request.location());
         property.setBedrooms(request.bedrooms());
         property.setArea(request.area());
-        property.setImageUrl(request.imageUrl());
+
 
         property.setAgent(agent);
 
@@ -52,6 +53,10 @@ public class PropertyService {
     }
 
     private PropertyResponse mapToResponse(Property property) {
+        List<String> imageUrls = property.getImages().stream()
+                .map(img -> imageStorageService.getPublicUrl(img.getImageKey()))
+                .toList();
+
         return new PropertyResponse(
                 property.getId(),
                 property.getTitle(),
@@ -60,9 +65,10 @@ public class PropertyService {
                 property.getPrice(),
                 property.getLocation(),
                 property.getAgent().getName(),
-                property.getImageUrl(),
+                imageUrls,
                 property.getBedrooms(),
-                property.getArea()
+                property.getArea(),
+                property.getBathrooms()
         );
     }
 
@@ -84,7 +90,6 @@ public class PropertyService {
         property.setLocation(request.location());
         property.setBedrooms(request.bedrooms());
         property.setArea(request.area());
-        property.setImageUrl(request.imageUrl());
 
         Property updatedProperty = propertyRepository.save(property);
         return mapToResponse(updatedProperty);

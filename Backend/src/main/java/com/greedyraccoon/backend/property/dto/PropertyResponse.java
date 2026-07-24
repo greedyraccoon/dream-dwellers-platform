@@ -1,6 +1,7 @@
 package com.greedyraccoon.backend.property.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public record PropertyResponse(
         Long id,
@@ -10,7 +11,8 @@ public record PropertyResponse(
         BigDecimal price,
         String location,
         String agentName,
-        String imageUrl,
+        List<String> imageUrls,
         Integer bedrooms,
-        Double area
+        Double area,
+        Integer bathrooms
 ) {}

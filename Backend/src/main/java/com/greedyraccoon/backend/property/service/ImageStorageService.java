@@ -18,8 +18,11 @@ public class ImageStorageService {
 
     private final S3Client s3Client;
 
-    @Value("${oracle.bucket-name}") private String bucketName;
-    @Value("${oracle.endpoint}") private String endpoint;
+    @Value("${aws.bucket-name}")
+    private String bucketName;
+
+    @Value("${aws.region}")
+    private String region;
 
     public String uploadImage(MultipartFile file) throws IOException {
         String key = UUID.randomUUID() + "_" + file.getOriginalFilename();
@@ -43,9 +46,7 @@ public class ImageStorageService {
                 .build());
     }
 
-    // Assuming bucket is public-read (simplest for real estate listing images)
     public String getPublicUrl(String key) {
-        return endpoint.replace("https://", "https://" + bucketName + ".") + "/o/" + key;
-        // verify exact public URL pattern in Oracle console — format varies slightly
+        return String.format("https://%s.s3.%s.amazonaws.com/%s", bucketName, region, key);
     }
 }
