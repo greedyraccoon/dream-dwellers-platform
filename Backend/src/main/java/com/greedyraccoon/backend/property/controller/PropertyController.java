@@ -1,23 +1,35 @@
 package com.greedyraccoon.backend.property.controller;
 
+import com.greedyraccoon.backend.exceptionHandler.ResourceNotFoundException;
 import com.greedyraccoon.backend.property.model.Property;
 import com.greedyraccoon.backend.property.dto.PropertyRequest;
 import com.greedyraccoon.backend.property.dto.PropertyResponse;
+import com.greedyraccoon.backend.property.model.PropertyImage;
+import com.greedyraccoon.backend.property.repository.PropertyImageRepository;
+import com.greedyraccoon.backend.property.repository.PropertyRepository;
+import com.greedyraccoon.backend.property.service.ImageStorageService;
+import com.greedyraccoon.backend.property.service.PropertyImageService;
 import com.greedyraccoon.backend.property.service.PropertyService;
+import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-    @RequestMapping("/api/v1/properties")
+@RequestMapping("/api/v1/properties")
 @RequiredArgsConstructor
 public class PropertyController {
 
     private final PropertyService propertyService;
+    private final PropertyRepository propertyRepository;
+    private final PropertyImageService propertyImageService;
+    private final ImageStorageService imageStorageService;
 
     @PostMapping
     public ResponseEntity<PropertyResponse> createProperty(
@@ -69,6 +81,14 @@ public class PropertyController {
             @RequestParam(defaultValue = "desc") String sortDir) {
         return ResponseEntity.ok(propertyService.searchProperties(
                 location, minPrice, maxPrice, bedrooms, status, type, sortBy, sortDir));
+    }
+
+    @PostMapping("/{id}/images")
+    public ResponseEntity<List<String>> uploadImages(
+            @PathVariable Long id,
+            @RequestParam("files") List<MultipartFile> files) {
+        List<String> uploadedKeys = propertyImageService.uploadImages(id, files);
+        return ResponseEntity.ok(uploadedKeys);
     }
 
 
