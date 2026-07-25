@@ -1,5 +1,6 @@
 package com.greedyraccoon.backend.property.service;
 
+import com.greedyraccoon.backend.property.model.PropertyImage;
 import com.greedyraccoon.backend.user.model.User;
 import com.greedyraccoon.backend.property.dto.PropertyRequest;
 import com.greedyraccoon.backend.property.dto.PropertyResponse;
@@ -36,8 +37,7 @@ public class PropertyService {
         property.setLocation(request.location());
         property.setBedrooms(request.bedrooms());
         property.setArea(request.area());
-
-
+        property.setBathrooms(request.bathrooms());
         property.setAgent(agent);
 
         Property savedProperty = propertyRepository.save(property);
@@ -90,6 +90,7 @@ public class PropertyService {
         property.setLocation(request.location());
         property.setBedrooms(request.bedrooms());
         property.setArea(request.area());
+        property.setBathrooms(request.bathrooms());
 
         Property updatedProperty = propertyRepository.save(property);
         return mapToResponse(updatedProperty);
@@ -103,6 +104,9 @@ public class PropertyService {
         // Security check: Only the agent who created it can delete it
         if (!property.getAgent().getEmail().equals(agentEmail)) {
             throw new RuntimeException("Unauthorized: You can only delete your own properties");
+        }
+        for (PropertyImage image : property.getImages()) {
+            imageStorageService.deleteImage(image.getImageKey());
         }
 
         propertyRepository.delete(property);
