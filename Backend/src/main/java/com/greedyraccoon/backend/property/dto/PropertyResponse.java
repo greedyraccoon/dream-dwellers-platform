@@ -6,6 +6,7 @@ import java.util.List;
 public record PropertyResponse(
         Long id,
         String title,
+        String description,
         String type,
         String status,
         BigDecimal price,

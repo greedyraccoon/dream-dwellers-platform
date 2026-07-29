@@ -60,6 +60,7 @@ public class PropertyService {
         return new PropertyResponse(
                 property.getId(),
                 property.getTitle(),
+                property.getDescription(),
                 property.getType().name(),
                 property.getStatus().name(),
                 property.getPrice(),
