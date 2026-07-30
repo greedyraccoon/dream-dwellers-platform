@@ -35,9 +35,12 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())  // ← ADD THIS
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // ← ADD THIS
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        // 1. PUBLIC READ ACCESS (Anyone can view the site)
                         .requestMatchers(HttpMethod.GET, "/api/v1/properties/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/blogs/**").permitAll()
+
+                        // 2. PUBLIC LOGIN ONLY (So you can actually log in)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

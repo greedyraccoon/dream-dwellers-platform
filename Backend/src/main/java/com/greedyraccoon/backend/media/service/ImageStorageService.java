@@ -1,4 +1,4 @@
-package com.greedyraccoon.backend.property.service;
+package com.greedyraccoon.backend.media.service;
 
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
@@ -27,21 +27,34 @@ public class ImageStorageService {
     @Value("${aws.region}")
     private String region;
 
-    public String uploadImage(MultipartFile file) throws IOException {
-        String key = UUID.randomUUID() + "_" + stripExtension(file.getOriginalFilename()) + ".jpg";
+    public String uploadImage(MultipartFile file) {
 
-        byte[] compressedBytes = compressImage(file);
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new IllegalArgumentException("Only image files (JPEG, PNG, WEBP, GIF) are allowed!");
+        }
 
-        PutObjectRequest request = PutObjectRequest.builder()
-                .bucket(bucketName)
-                .key(key)
-                .contentType("image/jpeg")
-                .build();
+        String originalFilename = file.getOriginalFilename();
+        String extension = "";
+        if (originalFilename != null && originalFilename.contains(".")) {
+            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+        String key = UUID.randomUUID().toString() + extension;
 
-        s3Client.putObject(request, RequestBody.fromInputStream(
-                new ByteArrayInputStream(compressedBytes), compressedBytes.length));
+        try {
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(key)
+                    .contentType(contentType) 
+                    .build();
 
-        return key;
+            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+            return key;
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to upload image to S3", e);
+        }
     }
 
     private byte[] compressImage(MultipartFile file) throws IOException {

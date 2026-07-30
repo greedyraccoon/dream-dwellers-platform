@@ -1,4 +1,4 @@
-package com.greedyraccoon.backend.property.service;
+package com.greedyraccoon.backend.media.service;
 
 import com.greedyraccoon.backend.exceptionHandler.ResourceNotFoundException;
 import com.greedyraccoon.backend.property.model.Property;
