@@ -1,5 +1,6 @@
 package com.greedyraccoon.backend.property.service;
 
+import com.greedyraccoon.backend.media.service.ImageStorageService;
 import com.greedyraccoon.backend.property.model.PropertyImage;
 import com.greedyraccoon.backend.user.model.User;
 import com.greedyraccoon.backend.property.dto.PropertyRequest;

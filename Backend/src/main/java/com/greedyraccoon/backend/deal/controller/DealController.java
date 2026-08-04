@@ -25,4 +25,16 @@ public class DealController {
     public ResponseEntity<List<DealResponse>> getMyDeals(Principal principal) {
         return ResponseEntity.ok(dealService.getDealsForAgent(principal.getName()));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DealResponse> updateDeal(@PathVariable Long id, @RequestBody DealRequest request) {
+        return ResponseEntity.ok(dealService.updateDeal(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDeal(@PathVariable Long id) {
+        dealService.deleteDeal(id);
+        return ResponseEntity.noContent().build();
+    }
+    
 }

@@ -29,18 +29,14 @@ public class PropertyImageService {
         int order = 0;
 
         for (MultipartFile file : files) {
-            try {
-                String key = imageStorageService.uploadImage(file);
-                PropertyImage image = new PropertyImage();
-                image.setProperty(property);
-                image.setImageKey(key);
-                image.setDisplayOrder(order++);
-                image.setPrimary(order == 1);
-                propertyImageRepository.save(image);
-                uploadedKeys.add(key);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to upload image: " + file.getOriginalFilename(), e);
-            }
+            String key = imageStorageService.uploadImage(file);
+            PropertyImage image = new PropertyImage();
+            image.setProperty(property);
+            image.setImageKey(key);
+            image.setDisplayOrder(order++);
+            image.setPrimary(order == 1);
+            propertyImageRepository.save(image);
+            uploadedKeys.add(key);
         }
         return uploadedKeys;
     }

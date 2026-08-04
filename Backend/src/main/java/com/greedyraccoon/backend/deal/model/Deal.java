@@ -49,6 +49,7 @@ public class Deal {
     public enum DealStatus {
         PENDING,
         CLOSED,
-        CANCELLED
+        CANCELLED,
+        NEGOTIATING
     }
 }

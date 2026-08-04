@@ -1,6 +1,6 @@
 package com.greedyraccoon.backend.media.controller;
 
-import com.greedyraccoon.backend.property.service.ImageStorageService;
+import com.greedyraccoon.backend.media.service.ImageStorageService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
