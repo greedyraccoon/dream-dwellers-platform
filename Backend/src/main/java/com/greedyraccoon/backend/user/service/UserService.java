@@ -1,5 +1,6 @@
 package com.greedyraccoon.backend.user.service;
 
+import com.greedyraccoon.backend.exceptionHandler.ResourceNotFoundException;
 import com.greedyraccoon.backend.user.model.User;
 import com.greedyraccoon.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,13 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    }
+
+    public void deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found with id " + id);
+        }
+        userRepository.deleteById(id);
     }
 
 
