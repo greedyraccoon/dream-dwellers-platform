@@ -32,19 +32,25 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(Customizer.withDefaults())  // ← ADD THIS
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(request -> request
-                        // 1. PUBLIC READ ACCESS (Anyone can view the site)
-                        .requestMatchers(HttpMethod.GET, "/api/v1/properties/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/blogs/**").permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        // 1. PUBLIC READ ACCESS
+                        .requestMatchers(HttpMethod.GET, "/api/v1/properties/**", "/api/v1/blogs/**").permitAll()
 
-                        // 2. PUBLIC LOGIN ONLY (So you can actually log in)
+                        // 2. PUBLIC AUTH
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+
+                        // 3. ADMIN USER MANAGEMENT (Accepts both ADMIN and ROLE_ADMIN)
+                        .requestMatchers("/api/v1/users/**").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").hasAnyAuthority("ADMIN", "ROLE_ADMIN")
+
+                        // 4. ALL OTHER ENDPOINTS
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
