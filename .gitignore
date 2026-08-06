@@ -1,6 +1,7 @@
 # Environment
-Backend/src/main/resources/application.properties
 .env
+.env.local
+.env.*.local
 
 # Maven
 target/

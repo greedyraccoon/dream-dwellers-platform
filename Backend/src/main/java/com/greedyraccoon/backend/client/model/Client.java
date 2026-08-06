@@ -57,24 +57,4 @@ public class Client {
         BUYER, TENANT, SELLER
     }
 
-    @RestController
-    @RequestMapping("/api/v1/clients")
-    @RequiredArgsConstructor
-    public static class ClientController {
-
-        private final ClientService clientService;
-
-        @PostMapping
-        public ResponseEntity<ClientResponse> createClient(
-                @RequestBody ClientRequest request,
-                Principal principal
-        ) {
-            return ResponseEntity.ok(clientService.createClient(request, principal.getName()));
-        }
-
-        @GetMapping
-        public ResponseEntity<List<ClientResponse>> getMyClients(Principal principal) {
-            return ResponseEntity.ok(clientService.getClientsForAgent(principal.getName()));
-        }
-    }
 }

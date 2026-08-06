@@ -1,5 +1,5 @@
-# dream-dwellers-platform
-A full-stack property management platform for Dream Dwellers Real Estate. Built with Spring Boot, PostgreSQL, React, and TypeScript — featuring JWT auth, property listings, client lead tracking, and deal pipeline management.
+# dream-Estate-platform
+A full-stack property management platform for Dream Estate Real Estate. Built with Spring Boot, PostgreSQL, React, and TypeScript — featuring JWT auth, property listings, client lead tracking, and deal pipeline management.
 
 ## 🛠️ Tech Stack
 
