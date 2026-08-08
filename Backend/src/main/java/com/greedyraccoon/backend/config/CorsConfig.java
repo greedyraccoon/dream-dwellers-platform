@@ -18,8 +18,8 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/**") // Matches your frontend axios baseURL
-                        .allowedOrigins("http://localhost:5173" , "http://localhost:8081" )
+                registry.addMapping("/api/v1/**") 
+                        .allowedOrigins("http://localhost:5173" , "http://localhost:8081" ,"https://dreamestate-app.greedyraccoon.space") // Add your frontend URL here)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .exposedHeaders("Authorization") // Crucial if you return JWTs in headers
@@ -31,7 +31,7 @@ public class CorsConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:8081"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:8081" ,"https://dreamestate-app.greedyraccoon.space"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("Authorization"));
